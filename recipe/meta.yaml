@@ -3,58 +3,58 @@
 
 
 package:
-	name: {{ name|lower }}
-	version: {{ version }}
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-	url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PGPy-{{ version }}.tar.gz
-	sha256: 279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383
-	patches:
-		- patches/0001-fix-key-size-error.patch
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PGPy-{{ version }}.tar.gz
+  sha256: 279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383
+  patches:
+    - patches/0001-fix-key-size-error.patch
 
 build:
-	number: 0
-	skip: True          # [py<36]
-	script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+  skip: True          # [py<36]
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
-	build:
-		- patch       		# [not win]
-		- m2-patch    	  # [win]
-	host:
-		- pip
-		- python
-		- setuptools
-		- wheel
-	run:
-		- cryptography >=3.3.2
-		- pyasn1
+  build:
+    - patch       		# [not win]
+    - m2-patch    	  # [win]
+  host:
+    - pip
+    - python
+    - setuptools
+    - wheel
+  run:
+    - cryptography >=3.3.2
+    - pyasn1
 
 test:
-	imports:
-		- pgpy
-		- pgpy.packet
-		- pgpy.packet.subpackets
-	commands:
-		- pip check
-		- pytest
-	requires:
-		- pip
-		- pytest
-	source_files:
-		- tests
+  imports:
+    - pgpy
+    - pgpy.packet
+    - pgpy.packet.subpackets
+  commands:
+    - pip check
+    - pytest
+  requires:
+    - pip
+    - pytest
+  source_files:
+    - tests
 
 about:
-	home: https://github.com/SecurityInnovation/PGPy
-	summary: Pretty Good Privacy for Python
-	license: BSD-3-Clause
-	license_family: BSD
-	license_file: LICENSE
-	description: PGPy is a Python library for implementing Pretty Good Privacy into Python programs, conforming to the OpenPGP specification per RFC 4880.
-	doc_url: https://pgpy.readthedocs.io/en/latest/
-	dev_url: https://github.com/SecurityInnovation/PGPy/tree/v0.6.0
+  home: https://github.com/SecurityInnovation/PGPy
+  summary: Pretty Good Privacy for Python
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  description: PGPy is a Python library for implementing Pretty Good Privacy into Python programs, conforming to the OpenPGP specification per RFC 4880.
+  doc_url: https://pgpy.readthedocs.io/en/latest/
+  dev_url: https://github.com/SecurityInnovation/PGPy/tree/v0.6.0
 
 
 extra:
-	recipe-maintainers:
-		- declanjscott
+  recipe-maintainers:
+    - declanjscott
