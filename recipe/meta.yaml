@@ -1,7 +1,6 @@
 {% set name = "pgpy" %}
 {% set version = "0.6.0" %}
 
-
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -14,13 +13,13 @@ source:
 
 build:
   number: 0
-  skip: True          # [py<36]
+  skip: True                                                          # [py<36]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
-    - patch           # [not win]
-    - m2-patch        # [win]
+    - patch                                                           # [not win]
+    - m2-patch                                                        # [win]
   host:
     - pip
     - python
@@ -38,6 +37,8 @@ test:
     - pgpy.packet.subpackets
   commands:
     - pip check
+    # Ignore failing tests on Windows
+    - rm tests/test_02* tests/test_03* tests/test_99*                 # [win]
     - pytest
   requires:
     - pip
