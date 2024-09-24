@@ -15,7 +15,7 @@ source:
 build:
   number: 0
   skip: True          # [py<36]
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
@@ -29,6 +29,7 @@ requirements:
   run:
     - cryptography >=3.3.2
     - pyasn1
+    - python
 
 test:
   imports:
