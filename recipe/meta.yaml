@@ -2,7 +2,7 @@
 {% set version = "0.6.0" %}
 {% set pytest_command = "pytest" %}
 # Ignore failing tests on Windows
-{% set pytest_command = pytest_command + " -k \"not (test_02_packets.py test_03_armor.py test_99_regressions.py)\"" %}     # [win]
+{% set pytest_command = pytest_command + " -k \"not (test_02_packets.py or test_03_armor.py or test_99_regressions.py)\"" %}     # [win]
 
 package:
   name: {{ name|lower }}
