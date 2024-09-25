@@ -54,7 +54,7 @@ about:
   license_file: LICENSE
   description: PGPy is a Python library for implementing Pretty Good Privacy into Python programs, conforming to the OpenPGP specification per RFC 4880.
   doc_url: https://pgpy.readthedocs.io/en/latest/
-  dev_url: https://github.com/SecurityInnovation/PGPy/tree/v0.6.0
+  dev_url: https://github.com/SecurityInnovation/PGPy/
 
 
 extra:
