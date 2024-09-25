@@ -18,7 +18,7 @@ build:
 
 requirements:
   build:
-  - patch                                                                                 # [not win]
+    - patch                                                                               # [not win]
     - m2-patch                                                                            # [win]
   host:
     - pip
@@ -37,12 +37,12 @@ test:
     - pgpy.packet.subpackets
   commands:
     - pip check
-    - {{ pytest_command }}
-  requires:
-    - pip
     - pytest                                                                              # [not win]
     # Ignore failing tests on Windows
     - pytest -k "not (test_02_packets.py or test_03_armor.py or test_99_regressions.py)"  # [win]
+  requires:
+    - pip
+    - pytest
   source_files:
     - tests
 
