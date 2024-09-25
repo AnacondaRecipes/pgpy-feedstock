@@ -1,5 +1,8 @@
 {% set name = "pgpy" %}
 {% set version = "0.6.0" %}
+{% set pytest_command = "pytest" %}
+# Ignore failing tests on Windows
+{% set pytest_command = pytest_command + " -k \"not (test_02_packets.py test_03_armor.py test_99_regressions.py)\"" %}     # [win]
 
 package:
   name: {{ name|lower }}
@@ -13,13 +16,13 @@ source:
 
 build:
   number: 0
-  skip: True                                                          # [py<36]
+  skip: True                                                                              # [py<36]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
-    - patch                                                           # [not win]
-    - m2-patch                                                        # [win]
+  - patch                                                                                 # [not win]
+    - m2-patch                                                                            # [win]
   host:
     - pip
     - python
@@ -37,9 +40,7 @@ test:
     - pgpy.packet.subpackets
   commands:
     - pip check
-    # Ignore failing tests on Windows
-    - rm tests/test_02* tests/test_03* tests/test_99*                 # [win]
-    - pytest
+    - {{ pytest_command }}
   requires:
     - pip
     - pytest
