@@ -1,6 +1,5 @@
 {% set name = "pgpy" %}
-{% set version = "0.5.4" %}
-
+{% set version = "0.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,39 +7,55 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PGPy-{{ version }}.tar.gz
-  sha256: bdd3da1e006fc8e81cc02232969924d6e8c98a4af1621a925d99bba09164183b
+  sha256: 279c2e353f4c3a319f00bd9bd582456e420f8a3ac6de2b4e9731444746828383
+  patches:
+    - patches/0001-fix-key-size-error.patch
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: True                                                                              # [py<36]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
+  build:
+    - patch                                                                               # [not win]
+    - m2-patch                                                                            # [win]
   host:
     - pip
-    - python >=3.5
+    - python
     - setuptools
     - wheel
   run:
-    - cryptography >=2.6
+    - cryptography >=3.3.2
     - pyasn1
-    - python >=3.5
-    - six >=1.9.0
+    - python
 
 test:
   imports:
     - pgpy
     - pgpy.packet
+    - pgpy.packet.subpackets
   commands:
     - pip check
+    - pytest                                                                              # [not win]
+    # Ignore failing tests on Windows
+    - pytest -k "not (test_02_packets.py or test_03_armor.py or test_99_regressions.py)"  # [win]
   requires:
     - pip
+    - pytest
+  source_files:
+    - tests
 
 about:
   home: https://github.com/SecurityInnovation/PGPy
   summary: Pretty Good Privacy for Python
   license: BSD-3-Clause
+  license_family: BSD
   license_file: LICENSE
+  description: PGPy is a Python library for implementing Pretty Good Privacy into Python programs, conforming to the OpenPGP specification per RFC 4880.
+  doc_url: https://pgpy.readthedocs.io/en/latest/
+  dev_url: https://github.com/SecurityInnovation/PGPy/
+
 
 extra:
   recipe-maintainers:
